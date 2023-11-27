@@ -1,5 +1,7 @@
 # Refactoring Golf
 
+Made with :heart: by [Fabio Bentaïla] and [Arthur Weidner]
+
 - Start on hole 1 and refactor the code to be like the code in hole 2
   - Use a diff tool to see the differences in code between the starting hole and end hole
 - Move to hole 2 and refactor the code from hole 2 to be like the code in hole 3
