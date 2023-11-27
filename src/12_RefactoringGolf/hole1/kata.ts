@@ -1,5 +1,10 @@
-
 const leBonNom = ' ';
+const premiereColonne = 0;
+const deuxiemeColonne = 1;
+const troisiemeColonne = 2;
+const premiereLigne = 0;
+const deuxiemeLigne = 1;
+const troisiemeLigne = 2;
 export class Game {
   private _lastSymbol = leBonNom;
   private _board: Board = new Board();
@@ -14,7 +19,7 @@ export class Game {
   }
 
   private validateFirstMove(player: string) {
-    if (this._lastSymbol == ' ') {
+    if (this._lastSymbol == leBonNom) {
       if (player == 'O') {
         throw new Error('Invalid first player');
       }
@@ -43,15 +48,15 @@ export class Game {
 
   public Winner(): string {
     if (this.isFirstRowFull() && this.isFirstRowFullWithSameSymbol()) {
-      return this._board.TileAt(0, 0)!.Symbol;
+      return this._board.TileAt(premiereLigne, premiereColonne)!.Symbol;
     }
 
     if (this.isSecondRowFull() && this.isSecondRowFullWithSameSymbol()) {
-      return this._board.TileAt(1, 0)!.Symbol;
+      return this._board.TileAt(deuxiemeLigne, premiereColonne)!.Symbol;
     }
 
     if (this.isThirdRowFull() && this.isThirdRowFullWithSameSymbol()) {
-      return this._board.TileAt(2, 0)!.Symbol;
+      return this._board.TileAt(troisiemeLigne, premiereColonne)!.Symbol;
     }
 
     return ' ';
@@ -59,16 +64,16 @@ export class Game {
 
   private isFirstRowFull() {
     return (
-      this._board.TileAt(0, 0)!.Symbol != ' ' &&
-      this._board.TileAt(0, 1)!.Symbol != ' ' &&
-      this._board.TileAt(0, 2)!.Symbol != ' '
+      this._board.TileAt(premiereLigne, premiereColonne)!.Symbol != ' ' &&
+      this._board.TileAt(premiereLigne, deuxiemeColonne)!.Symbol != ' ' &&
+      this._board.TileAt(premiereLigne, troisiemeColonne)!.Symbol != ' '
     );
   }
 
   private isFirstRowFullWithSameSymbol() {
     return (
-      this._board.TileAt(0, 0)!.Symbol == this._board.TileAt(0, 1)!.Symbol &&
-      this._board.TileAt(0, 2)!.Symbol == this._board.TileAt(0, 1)!.Symbol
+      this._board.TileAt(premiereLigne, premiereColonne)!.Symbol == this._board.TileAt(0, 1)!.Symbol &&
+      this._board.TileAt(premiereLigne, troisiemeColonne)!.Symbol == this._board.TileAt(0, 1)!.Symbol
     );
   }
 
