@@ -1,5 +1,7 @@
 # Hole 4 to Hole 5
 
+Made by [Fabio Bentaïla] & [Arthur Weidner]
+
 Change the code in hole 4 to be identical to the code on hole 5, both implenentation and tests can change.
 
 ## Refactorings
