@@ -24,23 +24,35 @@ export class Game {
   }
 
   private validateFirstMove(player: string) {
-    if (this._lastSymbol == emptyPlay) {
+    if (this.isLastSymbolEmpty()) {
       if (player == playerO) {
         throw new Error('Invalid first player');
       }
     }
   }
 
+  private isLastSymbolEmpty() {
+    return this._lastSymbol == emptyPlay;
+  }
+
   private validatePlayer(player: string) {
-    if (player == this._lastSymbol) {
+    if (this.isPlayerEqualsLastSymbol(player)) {
       throw new Error('Invalid next player');
     }
   }
 
+  private isPlayerEqualsLastSymbol(player: string) {
+    return player == this._lastSymbol;
+  }
+
   private validatePositionIsEmpty(x: number, y: number) {
-    if (this._board.TileAt(x, y).Symbol != emptyPlay) {
+    if (this.tileIsEmpty(x, y)) {
       throw new Error('Invalid position');
     }
+  }
+
+  private tileIsEmpty(x: number, y: number) {
+    return this._board.TileAt(x, y).Symbol != emptyPlay;
   }
 
   private updateLastPlayer(player: string) {
@@ -52,29 +64,20 @@ export class Game {
   }
 
   public Winner(): string {
-    if (this.isRowFull(firstRow) && this.isRowFullWithSameSymbol(firstRow)) {
+    if (this.isRowFullWithSameSymbol(firstRow)) {
       return this._board.TileAt(firstRow, firstColumn)!.Symbol;
     }
 
-    if (this.isRowFull(secondRow) && this.isRowFullWithSameSymbol(secondRow)) {
+    if (this.isRowFullWithSameSymbol(secondRow)) {
       return this._board.TileAt(secondRow, firstColumn)!.Symbol;
     }
 
-    if (this.isRowFull(thirdRow) && this.isRowFullWithSameSymbol(thirdRow)) {
+    if (this.isRowFullWithSameSymbol(thirdRow)) {
       return this._board.TileAt(thirdRow, firstColumn)!.Symbol;
     }
 
     return emptyPlay;
   }
-
-  private isRowFull(row: number) {
-    return (
-      this._board.TileAt(row, firstColumn)!.Symbol != emptyPlay &&
-      this._board.TileAt(row, secondColumn)!.Symbol != emptyPlay &&
-      this._board.TileAt(row, thirdColumn)!.Symbol != emptyPlay
-    );
-  }
-
   private isRowFullWithSameSymbol(row: number) {
     return (
       this._board.TileAt(row, firstColumn)!.Symbol ==
