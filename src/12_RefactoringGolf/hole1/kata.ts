@@ -1,17 +1,17 @@
 /* eslint-disable */
 
-const firstRow = 0;
-const secondRow = 1;
-const thirdRow = 2;
-const firstColumn = 0;
-const secondColumn = 1;
-const thirdColumn = 2;
+const FIRST_ROW = 0;
+const SECOND_ROW = 1;
+const THIRD_ROW = 2;
+const FIRST_COLUMN = 0;
+const SECOND_COLUMN = 1;
+const THIRD_COLUMN = 2;
 
 const playerO = 'O';
 const emptyPlay = ' ';
 
 export class Game {
-  private _lastSymbol = emptyPlay;
+  private symbolOfLastPlayer = emptyPlay;
   private _board: Board = new Board();
 
   public Play(symbol: string, x: number, y: number): void {
@@ -24,7 +24,7 @@ export class Game {
   }
 
   private validateFirstMove(player: string) {
-    if (this._lastSymbol == emptyPlay) {
+    if (this.symbolOfLastPlayer == emptyPlay) {
       if (player == playerO) {
         throw new Error('Invalid first player');
       }
@@ -32,26 +32,26 @@ export class Game {
   }
 
   private validatePlayer(player: string) {
-    if (player == this._lastSymbol) {
+    if (player == this.symbolOfLastPlayer) {
       throw new Error('Invalid next player');
     }
   }
 
   private validatePositionIsEmpty(x: number, y: number) {
-    if (this._board.TileAt(x, y).isNotEmpty) {
+    if (this._board.getTileAt(x, y).isNotEmpty) {
       throw new Error('Invalid position');
     }
   }
 
   private updateLastPlayer(player: string) {
-    this._lastSymbol = player;
+    this.symbolOfLastPlayer = player;
   }
 
   private updateBoard(player: string, x: number, y: number) {
-    this._board.AddTileAt(player, x, y);
+    this._board.addTileAt(player, x, y);
   }
 
-  public Winner(): string {
+  public getWinner(): string {
     return this._board.findRowFullWithSamePlayer();
   }
 }
@@ -92,34 +92,34 @@ class Board {
   private _plays: Tile[] = [];
 
   constructor() {
-    for (let x = firstRow; x <= thirdRow; x++) {
-      for (let y = firstColumn; y <= thirdColumn; y++) {
+    for (let x = FIRST_ROW; x <= THIRD_ROW; x++) {
+      for (let y = FIRST_COLUMN; y <= THIRD_COLUMN; y++) {
         this._plays.push(new Tile(x, y, emptyPlay));
       }
     }
   }
 
-  public TileAt(x: number, y: number): Tile {
+  public getTileAt(x: number, y: number): Tile {
     return this._plays.find((t: Tile) => t.hasSameCoordinatesAs(new Tile(x, y, emptyPlay)))!;
   }
 
-  public AddTileAt(symbol: string, x: number, y: number): void {
+  public addTileAt(symbol: string, x: number, y: number): void {
     this._plays
       .find((t: Tile) => t.hasSameCoordinatesAs(new Tile(x, y, symbol)))!
       .updateSymbol(symbol);
   }
 
   public findRowFullWithSamePlayer(): string {
-    if (this.isRowFull(firstRow) && this.isRowFullWithSameSymbol(firstRow)) {
-      return this.TileAt(firstRow, firstColumn)!.Symbol;
+    if (this.isRowFull(FIRST_ROW) && this.isRowFullWithSameSymbol(FIRST_ROW)) {
+      return this.getTileAt(FIRST_ROW, FIRST_COLUMN)!.Symbol;
     }
 
-    if (this.isRowFull(secondRow) && this.isRowFullWithSameSymbol(secondRow)) {
-      return this.TileAt(secondRow, firstColumn)!.Symbol;
+    if (this.isRowFull(SECOND_ROW) && this.isRowFullWithSameSymbol(SECOND_ROW)) {
+      return this.getTileAt(SECOND_ROW, FIRST_COLUMN)!.Symbol;
     }
 
-    if (this.isRowFull(thirdRow) && this.isRowFullWithSameSymbol(thirdRow)) {
-      return this.TileAt(thirdRow, firstColumn)!.Symbol;
+    if (this.isRowFull(THIRD_ROW) && this.isRowFullWithSameSymbol(THIRD_ROW)) {
+      return this.getTileAt(THIRD_ROW, FIRST_COLUMN)!.Symbol;
     }
 
     return emptyPlay;
@@ -127,16 +127,16 @@ class Board {
 
   private isRowFull(row: number) {
     return (
-      this.TileAt(row, firstColumn)!.isNotEmpty &&
-      this.TileAt(row, secondColumn)!.isNotEmpty &&
-      this.TileAt(row, thirdColumn)!.isNotEmpty
+      this.getTileAt(row, FIRST_COLUMN)!.isNotEmpty &&
+      this.getTileAt(row, SECOND_COLUMN)!.isNotEmpty &&
+      this.getTileAt(row, THIRD_COLUMN)!.isNotEmpty
     );
   }
 
   private isRowFullWithSameSymbol(row: number) {
     return (
-      this.TileAt(row, firstColumn)!.hasSameSymbolAs(this.TileAt(row, secondColumn)!) &&
-      this.TileAt(row, thirdColumn)!.hasSameSymbolAs(this.TileAt(row, secondColumn)!)
+      this.getTileAt(row, FIRST_COLUMN)!.hasSameSymbolAs(this.getTileAt(row, SECOND_COLUMN)!) &&
+      this.getTileAt(row, THIRD_COLUMN)!.hasSameSymbolAs(this.getTileAt(row, SECOND_COLUMN)!)
     );
   }
 }

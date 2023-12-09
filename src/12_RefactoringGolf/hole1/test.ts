@@ -42,7 +42,7 @@ describe('TicTacToe game', () => {
     game.Play('O', 1, 1);
     game.Play('X', 0, 2);
 
-    const winner = game.Winner();
+    const winner = game.getWinner();
 
     expect(winner).toBe('X');
   });
@@ -55,7 +55,7 @@ describe('TicTacToe game', () => {
     game.Play('X', 2, 2);
     game.Play('O', 0, 2);
 
-    const winner = game.Winner();
+    const winner = game.getWinner();
 
     expect(winner).toBe('O');
   });
@@ -67,7 +67,7 @@ describe('TicTacToe game', () => {
     game.Play('O', 0, 1);
     game.Play('X', 1, 2);
 
-    const winner = game.Winner();
+    const winner = game.getWinner();
 
     expect(winner).toBe('X');
   });
@@ -80,7 +80,7 @@ describe('TicTacToe game', () => {
     game.Play('X', 2, 2);
     game.Play('O', 1, 2);
 
-    const winner = game.Winner();
+    const winner = game.getWinner();
 
     expect(winner).toBe('O');
   });
@@ -92,7 +92,7 @@ describe('TicTacToe game', () => {
     game.Play('O', 0, 1);
     game.Play('X', 2, 2);
 
-    const winner = game.Winner();
+    const winner = game.getWinner();
 
     expect(winner).toBe('X');
   });
@@ -105,7 +105,7 @@ describe('TicTacToe game', () => {
     game.Play('X', 0, 1);
     game.Play('O', 2, 2);
 
-    const winner = game.Winner();
+    const winner = game.getWinner();
 
     expect(winner).toBe('O');
   });
